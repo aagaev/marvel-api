@@ -1,1 +1,1 @@
-https://aagaev.github.io/marvel-api/dist/public/index.html
+https://aagaev.github.io/marvel-api/dist/public/index.js
