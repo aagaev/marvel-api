@@ -15,6 +15,7 @@ class CharList extends Component {
     marvelService = new MarvelService();
 
     componentDidMount() {
+        
         this.marvelService.getAllCharacters()
             .then(this.onCharListLoaded)
             .catch(this.onError)
@@ -34,9 +35,9 @@ class CharList extends Component {
         })
     }
 
-    // Этот метод создан для оптимизации, 
-    // чтобы не помещать такую конструкцию в метод render
+
     renderItems(arr) {
+        const {onCharSelected} = this.props;
         const items =  arr.map((item) => {
             let imgStyle = {'objectFit' : 'cover'};
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
@@ -46,7 +47,8 @@ class CharList extends Component {
             return (
                 <li 
                     className="char__item"
-                    key={item.name}>
+                    key={item.id}
+                    onClick={() =>onCharSelected(item.id)}>
                         <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
                         <div className="char__name">{item.name}</div>
                 </li>

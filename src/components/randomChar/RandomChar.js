@@ -26,8 +26,13 @@ class RandomChar extends Component {
         
     }
 
+     onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
     onCharLoaded = (char) => {
-      
         this.setState({
             char, //char: char
             loading: false
@@ -43,6 +48,7 @@ class RandomChar extends Component {
     }
 
     updateChar = () => {
+        this.onCharLoading();
         const max = 1011400,
               min = 1011000,
              id = Math.floor(Math.random()*(max-min) + min);
@@ -56,6 +62,7 @@ class RandomChar extends Component {
             // })
            // console.log(id)
     } 
+    
     
     render() {
     

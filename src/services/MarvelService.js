@@ -27,14 +27,17 @@ class MarvelService {
     }
 
     noDescriptionMessage = (str) => str ? `${str.slice(0, 60)}...`  : str = 'Sorry but there is no description for this character. Please check Wiki page';
+    //onDecreasearr = (arr) => arr.length < 10 ? arr : arr.slice(0, 9);
 
     _transformCharacter = (char) => {
         return { 
+            id: char.id,
             name: char.name,
             description: this.noDescriptionMessage(char.description),
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
             homepage: char.urls[0].url,
-            wiki: char.urls[1].url
+            wiki: char.urls[1].url,
+            comics: char.comics.items
         }
     }
 
