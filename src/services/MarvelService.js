@@ -2,6 +2,7 @@
 class MarvelService {
     _apiBase = 'https://gateway.marvel.com:443/v1/public/';
     _apiKey = 'apikey=1d72cee4813314a40e4eb983489bd6b7';
+    _baseOffset = 0;
     getResource = async (url) => {
         const res = await fetch(url);
 
@@ -12,9 +13,9 @@ class MarvelService {
         return await res.json()
     }
 
-    getAllCharacters = async () => {
+    getAllCharacters = async (offset = this._baseOffset) => {
         //return this.getResource(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
-        const res =  await this.getResource(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
+        const res =  await this.getResource(`${this._apiBase}characters?limit=9&offset=${offset}&${this._apiKey}`);
        // console.log(res)
         return res.data.results.map(this._transformCharacter)// передаем в map callback функцию которая будет трансформировать приходящие к ней элементы(айтемы). То есть будет переходить в методе map каждый отдельный объект по порядку  и уже будет возвращаться новый объект, а в конце получим новый массив с объектами 
         //return res.data.results.map(item => this._transformCharacter(item))

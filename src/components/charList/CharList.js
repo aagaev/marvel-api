@@ -8,24 +8,46 @@ class CharList extends Component {
 
     state = {
         charList: [],
-        loading: true,
-        error: false
+        loading: true, //первая загрука первых 9 персонажей
+        error: false,
+        newItemLoading: false,//ручная загрузка потому изначально false
+        offset: 1541,
+        charEnded: false
     }
     
     marvelService = new MarvelService();
 
     componentDidMount() {
-        
-        this.marvelService.getAllCharacters()
+        this.onRequest()
+    }
+
+    onRequest = (offset) => {
+  
+        this.onCharListLoading() //для первичной загрузки не важно, но в будущем когда будем вызывать по клику то состояние переключится и будем для кнопки устанавливать disabled
+        this.marvelService.getAllCharacters(offset)
             .then(this.onCharListLoaded)
             .catch(this.onError)
     }
 
-    onCharListLoaded = (charList) => {
+    onCharListLoading = () => {
         this.setState({
-            charList,
-            loading: false
+            newItemLoading: true
         })
+    }
+
+    onCharListLoaded = (newCharList) => {
+        let ended = false;
+        if(newCharList.length < 9) {
+            ended = true;
+        }
+        this.setState(({charList, offset}) => ({
+                charList: [...charList, ...newCharList],//в первый раз когда компонент отрендерился charlist будет пустой массив
+                loading: false,
+                newItemLoading: false,
+                offset: offset + 9,
+                charEnded: ended 
+            })) 
+                 
     }
 
     onError = () => {
@@ -61,10 +83,10 @@ class CharList extends Component {
             </ul>
         )
     }
-
+ 
     render() {
-
-        const {charList, loading, error} = this.state;
+        console.log(this.state.offset)
+        const {charList, loading, error, offset, newItemLoading, charEnded} = this.state;
         
         const items = this.renderItems(charList);
 
@@ -77,7 +99,10 @@ class CharList extends Component {
                 {errorMessage}
                 {spinner}
                 {content}
-                <button className="button button__main button__long">
+                <button className="button button__main button__long"
+                disabled={newItemLoading}
+                onClick={() => this.onRequest(offset)}
+                style={{'display': charEnded ? 'none' : 'block'}}>
                     <div className="inner">load more</div>
                 </button>
             </div>
