@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
@@ -84,7 +86,7 @@ const View = ({char}) => {
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = {'objectFit' : 'contain'};
     }
-    console.log(comics)
+    //console.log(comics)
     return (
         <>
             <div className="char__basics">
@@ -123,5 +125,7 @@ const View = ({char}) => {
     )
 }
 
-   
+CharInfo.propTypes = {
+    charId: PropTypes.number
+}   
 export default CharInfo;
