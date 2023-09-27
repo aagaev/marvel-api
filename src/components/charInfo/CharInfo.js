@@ -31,7 +31,7 @@ class CharInfo extends Component {
     updateChar = () => {
         const {charId} = this.props
         if(!charId) {//for skeleton appearing&& first page loading
-            return
+            return 
         }
 
         this.onCharLoading();
