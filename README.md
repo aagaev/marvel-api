@@ -1,1 +1,1 @@
-https://aagaev.github.io/marvel-api/public/index.html
+https://marvel-api-rose.vercel.app/

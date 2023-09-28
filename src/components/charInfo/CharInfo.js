@@ -16,7 +16,7 @@ const CharInfo = (props) => {
     //     error: false
     // }
 
-    const [char, setChar] = useState(null)
+    const [char, setChar] = useState(null) // 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     
