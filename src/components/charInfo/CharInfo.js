@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Skeleton from '../skeleton/Skeleton';
 import './charInfo.scss';
 
@@ -16,11 +16,11 @@ const CharInfo = (props) => {
     //     error: false
     // }
 
-    const [char, setChar] = useState(null) // 
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
+    const [char, setChar] = useState(null) // for skeleton appearing&& first page loading
+    // const [loading, setLoading] = useState(false)
+    // const [error, setError] = useState(false)
     
-    const marvelService = new MarvelService();
+    const {loading, error, getCharacter, clearError}= useMarvelService();
 
     // componentDidMount() {
     //     this.updateChar();
@@ -39,7 +39,7 @@ const CharInfo = (props) => {
     const updateChar = () => {
         const {charId} = props
         if(!charId) {//for skeleton appearing&& first page loading
-            return 
+            return //or return null
         }
 
         // this.onCharLoading();
@@ -47,23 +47,23 @@ const CharInfo = (props) => {
         //     .getCharacter(charId)
         //     .then(this.onCharLoaded)
         //     .catch(this.onError)
-        onCharLoading();
-        marvelService
-            .getCharacter(charId)
+        //onCharLoading();
+        clearError()//очищает от ошибки даже если в прошлом запросе она была, то в следующем запросе она очистится перед новым запросом0
+        getCharacter(charId)
             .then(onCharLoaded)
-            .catch(onError)
+            
     }
 
-    const onCharLoading = () => {
-        setLoading(loading => true)
-        // this.setState({
-        //     loading: true
-        // })
-    }
+    // const onCharLoading = () => {
+    //     setLoading(loading => true)
+    //     // this.setState({
+    //     //     loading: true
+    //     // })
+    // }
 
     const onCharLoaded = (char) => {
         setChar(char)
-        setLoading(loading => false)
+        //setLoading(loading => false)
         // this.setState({
         //     char, //char: char
         //     loading: false
@@ -71,14 +71,14 @@ const CharInfo = (props) => {
 
     }
 
-    const onError = () => {
-        setLoading(loading => false)
-        setError(error => true)
-        // this.setState({
-        //     loading: false,
-        //     error: true
-        // }) 
-    }
+    // const onError = () => {
+    //     setLoading(loading => false)
+    //     setError(error => true)
+    //     // this.setState({
+    //     //     loading: false,
+    //     //     error: true
+    //     // }) 
+    // }
 
    
     //const {char, loading, error,} = this.state;

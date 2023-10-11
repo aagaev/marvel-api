@@ -1,5 +1,5 @@
 import { useState,useEffect } from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage.js';
 import './randomChar.scss';
@@ -14,10 +14,10 @@ const RandomChar = () => {
     // }
 
     const [char, setChar] = useState({}) // or null
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
+    // const [loading, setLoading] = useState(false) //will take loading from Custom Hook useMarvelService
+    // const [error, setError] = useState(false) //will take error from Custom Hook useMarvelService
 
-    const marvelService = new MarvelService();
+    const {loading, error, clearError, getCharacter} = useMarvelService();
 
     // componentDidMount() {
     //     this.updateChar();
@@ -25,7 +25,7 @@ const RandomChar = () => {
     // }
     useEffect(() => {
         updateChar()
-        const timerId = setInterval(updateChar, 10000);
+        const timerId = setInterval(updateChar, 500000);
 
         return () => {
             clearInterval(timerId)
@@ -43,9 +43,9 @@ const RandomChar = () => {
     //     })
     // }
 
-    const onCharLoading = () => {
-       setLoading(true)
-    }
+    // const onCharLoading = () => {
+    //    setLoading(true)
+    // }
 
     // onCharLoaded = (char) => {
     //     this.setState({
@@ -57,32 +57,37 @@ const RandomChar = () => {
 
     const onCharLoaded = (char) => {
         setChar(char)
-        setLoading(false)
+        //setLoading(false)  //will take loading from Custom Hook useMarvelService
         //console.log(char)
     }
 
-    // onError = () => {
+    // onError = () => { 
     //     this.setState({
     //         loading: false,
     //         error: true
     //     }) 
     // }
 
-    const onError = () => {
-        setLoading(false)
-        setError(true)
-    }
+    // const onError = () => {  //will take error from Custom Hook useMarvelService
+    //     setLoading(false)
+    //     setError(true)
+    // }
 
     const updateChar = () => {
-        onCharLoading();
+        // onCharLoading(); will take loading from Custom Hook useMarvelService
+        clearError()//очищает от ошибки даже если в прошлом запросе она была, то в следующем запросе она очистится перед новым запросом
         const max = 1011400,
               min = 1011000,
              id = Math.floor(Math.random()*(max-min) + min);
         
-        marvelService
-            .getCharacter(id)
-            .then(onCharLoaded) //когда мы используем промисы, цепочка через then идет, в функцию then приходит аргумент и когда внутри просто ссылка на функцию, то этот аргумент приходящий в then будет автоматически будет подставляться в метод this.onChatLoaded и затем запишеться внутрь стейта
-            .catch(onError)
+        getCharacter(id) //will take request to server from Custom Hook useMarvelService
+             .then(onCharLoaded) //когда мы используем промисы, цепочка через then идет, в функцию then приходит аргумент и когда внутри просто ссылка на функцию, то этот аргумент приходящий в then будет автоматически будет подставляться в метод this.onChatLoaded и затем запишеться внутрь стейта
+            //  .catch(onError)   //will take error from Custom Hook useMarvelService
+
+        // marvelService
+        //     .getCharacter(id)
+        //     .then(onCharLoaded) //когда мы используем промисы, цепочка через then идет, в функцию then приходит аргумент и когда внутри просто ссылка на функцию, то этот аргумент приходящий в then будет автоматически будет подставляться в метод this.onChatLoaded и затем запишеться внутрь стейта
+        //     .catch(onError)
             // .then(res => {
             //     this.setState(res)
             // })

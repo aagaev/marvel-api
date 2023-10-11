@@ -1,17 +1,19 @@
 import {useState, useEffect, useRef} from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import './charList.scss';
 
 const CharList = (props) => {
  
     const [charList, setCharList] = useState([])
-    const [loading, setLoading] = useState(true) //первая загрука первых 9 персонажей
-    const [error, setError] = useState(false)
+    // const [loading, setLoading] = useState(true) //первая загрука первых 9 персонажей
+    // const [error, setError] = useState(false)
     const [newItemLoading, setNewItemLoading] = useState(false)//ручная загрузка потому изначально false
     const [offset, setOffset] = useState(1532)
     const [charEnded, setCharEnded] = useState(false)
+
+    
    
     // state = {
     //     charList: [],
@@ -22,22 +24,27 @@ const CharList = (props) => {
     //     charEnded: false
     // }
     
-    const marvelService = new MarvelService();
+    const {error, loading, getAllCharacters, clearError} = useMarvelService();
 
     // componentDidMount() {
     //     this.onRequest()
     // }
 
     useEffect(() => { //useEffect будет запущена после рендера, то есть после того, как наша функция onRequest уже существует внутри нашего компонента-функции(сonst CharList()  )
-        onRequest(); // поэтому можем спокойно использовать onRequest() выше чем она объявлена
+        onRequest(offset, true); // поэтому можем спокойно использовать onRequest() выше чем она объявлена
     }, []) // если пустой массив в зависимостях значит функция выполнится один раз при создании компонента
 
-    const onRequest = (offset) => {
-        
-        onCharListLoading() //для первичной загрузки не важно, но в будущем когда будем вызывать по клику то состояние переключится и будем для кнопки устанавливать disabled
-        marvelService.getAllCharacters(offset)
+    const onRequest = (offset, initial) => {
+        initial ? setNewItemLoading(false) : setNewItemLoading(true); 
+       
+        //setNewItemLoading(true)
+        getAllCharacters(offset)
             .then(onCharListLoaded)
-            .catch(onError)
+          
+        // onCharListLoading() //для первичной загрузки не важно, но в будущем когда будем вызывать по клику то состояние переключится и будем для кнопки устанавливать disabled
+        // marvelService.getAllCharacters(offset)
+        //     .then(onCharListLoaded)
+        //     .catch(onError)
     }
 
     // onCharListLoading = () => {
@@ -46,9 +53,9 @@ const CharList = (props) => {
     //     })
     // }
 
-    const onCharListLoading = () => {
-        setNewItemLoading(true)
-    }
+    // const onCharListLoading = () => {
+    //     setNewItemLoading(true)
+    // }
 
     // onCharListLoaded = (newCharList) => {
     //     let ended = false;
@@ -71,16 +78,16 @@ const CharList = (props) => {
         }
 
         setCharList(charList => [...charList, ...newCharList])
-        setLoading(loading => false) //Аргумент(колбэк-функцию) необязательно передавать, он не используется
+        //setLoading(loading => false) //Аргумент(колбэк-функцию) необязательно передавать, он не используется
         setNewItemLoading(newItemLoading => false)
         setOffset(offset => offset +9)
         setCharEnded(charEnded => ended)
     }
 
-    const onError = () => {
-        setError(true);
-        setLoading(loading => false)
-    }
+    // const onError = () => {
+    //     setError(true);
+    //     setLoading(loading => false)
+    // }
 
     // onError = () => {
     //     this.setState({
@@ -153,27 +160,27 @@ const CharList = (props) => {
     //const {charList, loading, error, offset, newItemLoading, charEnded} = this.state;
     
     const items = renderItems(charList);
-
+   
     const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error) ? items : null;
+    const spinner = loading && !newItemLoading ? <Spinner/> : null;
+   // const content = !(loading || error) ? items : null;
 
     return (
         <div className="char__list">
             {errorMessage}
             {spinner}
-            {content}
+            {items}
             <button className="button button__main button__long"
-            disabled={newItemLoading}
-            onClick={() => onRequest(offset)}
-            style={{'display': charEnded ? 'none' : 'block'}}>
-                <div className="inner">load more</div>
+                disabled={newItemLoading}
+                onClick={() => onRequest(offset)}
+                style={{'display': charEnded ? 'none' : 'block'}}>
+                    <div className="inner">load more</div>
             </button>
         </div>
     )
 }
 
-
+ 
 
 // const CharItems = ({chars}) => {
 //     return (
