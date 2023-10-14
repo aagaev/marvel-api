@@ -1,16 +1,14 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
 
 import './comicsList.scss';
-import uw from '../../resources/img/UW.png';
-import xMen from '../../resources/img/x-men.png';
-import { render } from 'react-dom';
 
 const ComicsList = () => {
 
-    const {loading, error, clearError, getAllComics} = useMarvelService();
+    const {loading, error, getAllComics} = useMarvelService();
 
     const [comicsList, setComicsList] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false)//ручная загрузка потому изначально false
@@ -49,11 +47,11 @@ const ComicsList = () => {
             return (
                 <li className="comics__item"
                     key = {i}>
-                        <a href={'#'}>
+                        <Link to={`/comics/${item.id}`}>
                             <img src={item.thumbnail} alt={item.title} style={imgStyle} className="comics__item-img"/>
                             <div className="comics__item-name">{item.title}</div>
                             <div className="comics__item-price">{item.price}</div>
-                        </a>
+                        </Link>
                 </li>
             )
         }) 
