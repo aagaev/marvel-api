@@ -1,23 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.a0d4324d.chunk.css",
-    "main.js": "/static/js/main.840d8472.chunk.js",
-    "main.js.map": "/static/js/main.840d8472.chunk.js.map",
+    "main.css": "/static/css/main.cd3b7b5e.chunk.css",
+    "main.js": "/static/js/main.793cb90b.chunk.js",
+    "main.js.map": "/static/js/main.793cb90b.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.76f7a808.js",
     "runtime-main.js.map": "/static/js/runtime-main.76f7a808.js.map",
-    "static/js/2.5e8bb286.chunk.js": "/static/js/2.5e8bb286.chunk.js",
-    "static/js/2.5e8bb286.chunk.js.map": "/static/js/2.5e8bb286.chunk.js.map",
+    "static/js/2.b94f617d.chunk.js": "/static/js/2.b94f617d.chunk.js",
+    "static/js/2.b94f617d.chunk.js.map": "/static/js/2.b94f617d.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.a0d4324d.chunk.css.map": "/static/css/main.a0d4324d.chunk.css.map",
-    "static/js/2.5e8bb286.chunk.js.LICENSE.txt": "/static/js/2.5e8bb286.chunk.js.LICENSE.txt",
+    "static/css/main.cd3b7b5e.chunk.css.map": "/static/css/main.cd3b7b5e.chunk.css.map",
+    "static/js/2.b94f617d.chunk.js.LICENSE.txt": "/static/js/2.b94f617d.chunk.js.LICENSE.txt",
+    "static/media/Avengers.4065c8f9.png": "/static/media/Avengers.4065c8f9.png",
+    "static/media/Avengers_logo.9eaf2193.png": "/static/media/Avengers_logo.9eaf2193.png",
     "static/media/error.42292aa1.gif": "/static/media/error.42292aa1.gif",
     "static/media/mjolnir.61f31e18.png": "/static/media/mjolnir.61f31e18.png",
     "static/media/vision.067d4ae1.png": "/static/media/vision.067d4ae1.png"
   },
   "entrypoints": [
     "static/js/runtime-main.76f7a808.js",
-    "static/js/2.5e8bb286.chunk.js",
-    "static/css/main.a0d4324d.chunk.css",
-    "static/js/main.840d8472.chunk.js"
+    "static/js/2.b94f617d.chunk.js",
+    "static/css/main.cd3b7b5e.chunk.css",
+    "static/js/main.793cb90b.chunk.js"
   ]
 }
